@@ -11,7 +11,7 @@ env:
   IMAGE_NAME: caddy-aneekl
 
 jobs:
-  build:
+  build_docker:
     runs-on: ubuntu-latest
     permissions:
       contents: read
