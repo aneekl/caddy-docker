@@ -8,7 +8,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: caddy-aneekl
 
 jobs:
   build:
@@ -18,10 +17,13 @@ jobs:
         include:
           - files: Dockerfile.cf
             tags: cf
+            repo: caddy-cf
           - files: Dockerfile.docker
             tags: docker
+            repo: caddy-docker
           - files: Dockerfile.dockercf
             tags: dockercf
+            repo: caddy-dockercf
 
     runs-on: ubuntu-latest
     permissions:
@@ -36,7 +38,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ github.actor }}/${{ matrix.repo }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -57,23 +59,5 @@ jobs:
           file: ${{ matrix.files }}
           platforms: linux/amd64, linux/arm64
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ matrix.tags }}
+          tags: ${{ env.REGISTRY }}/${{ github.actor }}/${{ matrix.repo }}:latest
           labels: ${{ steps.meta.outputs.labels }}
-
-      # - name: Build and push Docker images
-      #   uses: docker/build-push-action@v3
-      #   with:
-      #     context: ./Dockerfile.docker
-      #     platforms: linux/amd64, linux/arm64, linux/arm/7
-      #     push: true
-      #     tags: ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:docker
-      #     labels: ${{ steps.meta.outputs.labels }}
-
-      # - name: Build and push Docker images
-      #   uses: docker/build-push-action@v3
-      #   with:
-      #     context: ./Dockerfile.docker
-      #     platforms: linux/amd64, linux/arm64, linux/arm/7
-      #     push: true
-      #     tags: ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:dockercf
-      #     labels: ${{ steps.meta.outputs.labels }}
