@@ -2,9 +2,9 @@ name: Create and publish a Docker image
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
 
 env:
   REGISTRY: ghcr.io
@@ -16,13 +16,10 @@ jobs:
       matrix:
         include:
           - files: Dockerfile.cf
-            tags: cf
             repo: caddy-cf
           - files: Dockerfile.docker
-            tags: docker
             repo: caddy-docker
           - files: Dockerfile.dockercf
-            tags: dockercf
             repo: caddy-dockercf
 
     runs-on: ubuntu-latest
