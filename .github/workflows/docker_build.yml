@@ -16,11 +16,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - files: ./Dockerfile.cf
+          - files: Dockerfile.cf
             tags: cf
-          - files: ./Dockerfile.docker
+          - files: Dockerfile.docker
             tags: docker
-          - files: ./Dockerfile.dockercf
+          - files: Dockerfile.dockercf
             tags: dockercf
 
     runs-on: ubuntu-latest
