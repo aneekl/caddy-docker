@@ -4,7 +4,6 @@ on:
   push:
     tags:
       - '*'
-  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
@@ -15,6 +14,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - files: Dockerfile
+            repo: caddy
           - files: Dockerfile.cf
             repo: caddy-cf
           - files: Dockerfile.docker
@@ -56,5 +57,5 @@ jobs:
           file: ${{ matrix.files }}
           platforms: linux/amd64, linux/arm64
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.actor }}/${{ matrix.repo }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
