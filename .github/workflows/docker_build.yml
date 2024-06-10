@@ -19,8 +19,8 @@ jobs:
             repo: caddy
           # - files: Dockerfile.cf
           #   repo: caddy-cf
-          # - files: Dockerfile.docker
-          #   repo: caddy-docker
+          - files: Dockerfile.docker
+            repo: caddy-docker
           # - files: Dockerfile.dockercf
           #   repo: caddy-dockercf
 
